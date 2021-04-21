@@ -43,12 +43,14 @@ public class Game implements ActionListener {
     //Above is initialzing FileReader.
 
     int holder = 0;
+    int answerVariable = 0;
+    int playersScore = 0;
     //Above is intialzing variable.
 
     Game(){
         JFrame frame = new JFrame("Group 1's Trivia Game");
         frame.setLayout(new FlowLayout());
-        frame.setSize(200, 110);
+        frame.setSize(240, 120);
         //Above is setting up the GUI frame.
 
         try{
@@ -108,10 +110,10 @@ public class Game implements ActionListener {
         //Above is creating bunttons for the options and making them the options for the questions.
         //Also giving some modifers to change colors. 
 
-        nextQuestion = new JButton("Next Quetion");
+        nextQuestion = new JButton("Next Question");
         //CHANGE-- Leaving this color plain?
 
-        score = new JLabel("Your score is: ");
+        score = new JLabel("Your score is: " + playersScore);
         //CHANGE-- NEED TO FINISH THE ABOVE.
 
         name.addActionListener(this);
@@ -134,50 +136,60 @@ public class Game implements ActionListener {
         //Above is making the frame visible.
     }
 
+    public void actionPerformed(ActionEvent ae) {
+        if (answerA.isSelected()){
+            answerVariable = 1;
+        }
+        else if (answerB.isSelected()){
+            answerVariable = 2;
+        }
+        else if (answerC.isSelected()){
+            answerVariable = 3;
+        }
+        else if (answerD.isSelected()){
+            answerVariable = 4;
+        }
 
+        if (answerVariable == thequestions.get(holder).getAnswer()){
+            playersScore = playersScore + thequestions.get(holder).getPoints();
+        }
 
-
-
-
-    //Above is declaring variables.
-
-    public static void game(String[] args) {
-
-
-        /*
         try{
             FileWriter toWriteFile;
-            toWriteFile = new FileWriter("trivia.txt");
+            toWriteFile = new FileWriter("scores.txt");
             //Above is initalizing FileWriter.
 
             BufferedWriter output = new BufferedWriter(toWriteFile);
             //Above is initalizing BufferedWriter.
+            
+            String userName = name.getText();
+            //Above is pulling the user's name.
 
-            for (int i = 0; i < thequestions.size(); i++){
-                output.write(thequestions.get(i).getQuestion());
-                output.newLine();
-                output.write(thequestions.get(i).getOptionA());
-                output.newLine();
-                output.write(thequestions.get(i).getOptionB());
-                output.newLine();
-                output.write(thequestions.get(i).getOptionC());
-                output.newLine();
-                output.write(thequestions.get(i).getOptionD());
-                output.newLine();
-                output.write(thequestions.get(i).getAnswer());
-                output.newLine();
-                output.write(thequestions.get(i).getPoints());
-                output.newLine();
+            output.write(userName + "'s score is: " + Integer.toString(playersScore));
+            //Above is writting user's score to .txt file.
+            //CHECK-- If I did this correctly then we will get the user's name along with their score.
 
-                output.flush();
-            }
-            output.close();
+            output.flush();
         }
         catch (IOException excpt){
             excpt.printStackTrace();
         }
-        */
 
+        if (ae.getActionCommand().equals("Next Question")){
+            holder++;
+        }
+        //Above will move to next question if the buntton is pressed.
+
+        if (holder == 0){
+            currentQuestion.setText(thequestions.get(holder).getQuestion());
+            answerA.setText(thequestions.get(holder).getOptionA());
+            answerB.setText(thequestions.get(holder).getOptionB());
+            answerC.setText(thequestions.get(holder).getOptionC());
+            answerD.setText(thequestions.get(holder).getOptionD());
+            questionValue.setText("This question is worth "+ String.valueOf(thequestions.get(holder).getPoints()) + " points.");
+
+            score.setText("Your score is: " + playersScore);
+            //idk about this last one.
+        }
     }
 }
-//Note: This looks very similar to Main.java in Lab 9.
