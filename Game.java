@@ -50,7 +50,7 @@ public class Game implements ActionListener {
     Game(){
         JFrame frame = new JFrame("Group 1's Trivia Game");
         frame.setLayout(new FlowLayout());
-        frame.setSize(240, 120);
+        frame.setSize(515, 314);
         //Above is setting up the GUI frame.
 
         try{
@@ -114,9 +114,12 @@ public class Game implements ActionListener {
         //CHANGE-- Leaving this color plain?
 
         score = new JLabel("Your score is: " + playersScore);
-        //CHANGE-- NEED TO FINISH THE ABOVE.
 
         name.addActionListener(this);
+        answerA.addActionListener(this);
+        answerB.addActionListener(this);
+        answerC.addActionListener(this);
+        answerD.addActionListener(this);
         nextQuestion.addActionListener(this);
         //Above is implementing actionlisteners.
 
@@ -136,22 +139,41 @@ public class Game implements ActionListener {
         //Above is making the frame visible.
     }
 
-    public void actionPerformed(ActionEvent ae) {
-        if (answerA.isSelected()){
-            answerVariable = 1;
-        }
-        else if (answerB.isSelected()){
-            answerVariable = 2;
-        }
-        else if (answerC.isSelected()){
-            answerVariable = 3;
-        }
-        else if (answerD.isSelected()){
-            answerVariable = 4;
-        }
-
+    void pointGetter(){
         if (answerVariable == thequestions.get(holder).getAnswer()){
             playersScore = playersScore + thequestions.get(holder).getPoints();
+        }
+    }
+    //Above is method that keeps tracks of points.
+
+    public void actionPerformed(ActionEvent ae) {
+        if (ae.getActionCommand().equals(thequestions.get(holder).getOptionA())){
+            answerVariable = 1;
+            
+            pointGetter();
+            
+            holder++;
+        }
+        else if (ae.getActionCommand().equals(thequestions.get(holder).getOptionB())){
+            answerVariable = 2;
+            
+            pointGetter();
+            
+            holder++;
+        }
+        else if (ae.getActionCommand().equals(thequestions.get(holder).getOptionC())){
+            answerVariable = 3;
+
+            pointGetter();
+
+            holder++;
+        }
+        else if (ae.getActionCommand().equals(thequestions.get(holder).getOptionD())){
+            answerVariable = 4;
+            
+            pointGetter();
+            
+            holder++;
         }
 
         try{
@@ -166,6 +188,7 @@ public class Game implements ActionListener {
             //Above is pulling the user's name.
 
             output.write(userName + "'s score is: " + Integer.toString(playersScore));
+            output.newLine();
             //Above is writting user's score to .txt file.
             //CHECK-- If I did this correctly then we will get the user's name along with their score.
 
@@ -191,5 +214,75 @@ public class Game implements ActionListener {
             score.setText("Your score is: " + playersScore);
             //idk about this last one.
         }
+       
+        if (holder == 1){
+            currentQuestion.setText(thequestions.get(holder).getQuestion());
+            answerA.setText(thequestions.get(holder).getOptionA());
+            answerB.setText(thequestions.get(holder).getOptionB());
+            answerC.setText(thequestions.get(holder).getOptionC());
+            answerD.setText(thequestions.get(holder).getOptionD());
+            questionValue.setText("This question is worth "+ String.valueOf(thequestions.get(holder).getPoints()) + " points.");
+
+            score.setText("Your score is: " + playersScore);
+            welcome.setText("Hi " + name.getText() + "! Welcome to the best trivia game.");
+            name.setVisible(false);
+        }
+
+        if (holder == 2){
+            currentQuestion.setText(thequestions.get(holder).getQuestion());
+            answerA.setText(thequestions.get(holder).getOptionA());
+            answerB.setText(thequestions.get(holder).getOptionB());
+            answerC.setText(thequestions.get(holder).getOptionC());
+            answerD.setText(thequestions.get(holder).getOptionD());
+            questionValue.setText("This question is worth "+ String.valueOf(thequestions.get(holder).getPoints()) + " points.");
+
+            score.setText("Your score is: " + playersScore);
+        }
+        
+        if (holder == 3){
+            currentQuestion.setText(thequestions.get(holder).getQuestion());
+            answerA.setText(thequestions.get(holder).getOptionA());
+            answerB.setText(thequestions.get(holder).getOptionB());
+            answerC.setText(thequestions.get(holder).getOptionC());
+            answerD.setText(thequestions.get(holder).getOptionD());
+            questionValue.setText("This question is worth "+ String.valueOf(thequestions.get(holder).getPoints()) + " points.");
+
+            score.setText("Your score is: " + playersScore);
+        }
+
+        if (holder == 4){
+            currentQuestion.setText(thequestions.get(holder).getQuestion());
+            answerA.setText(thequestions.get(holder).getOptionA());
+            answerB.setText(thequestions.get(holder).getOptionB());
+            answerC.setText(thequestions.get(holder).getOptionC());
+            answerD.setText(thequestions.get(holder).getOptionD());
+            questionValue.setText("This question is worth "+ String.valueOf(thequestions.get(holder).getPoints()) + " points.");
+
+            score.setText("Your score is: " + playersScore);
+        }
+        
+        if (holder == 5){
+            currentQuestion.setText(thequestions.get(holder).getQuestion());
+            answerA.setText(thequestions.get(holder).getOptionA());
+            answerB.setText(thequestions.get(holder).getOptionB());
+            answerC.setText(thequestions.get(holder).getOptionC());
+            answerD.setText(thequestions.get(holder).getOptionD());
+            questionValue.setText("This question is worth "+ String.valueOf(thequestions.get(holder).getPoints()) + " points.");
+
+            score.setText("Your score is: " + playersScore);
+        }
+
+        if (holder == thequestions.size()){
+            welcome.setText("Wow " + name.getText() + ", you've answered all the questions I have for you. Your final score is: " + playersScore);
+
+            currentQuestion.setVisible(false);
+            questionValue.setVisible(false);
+            answerA.setVisible(false);
+            answerB.setVisible(false);
+            answerC.setVisible(false);
+            answerD.setVisible(false);
+            nextQuestion.setVisible(false);
+            score.setVisible(false);
+        }
+        }
     }
-}
