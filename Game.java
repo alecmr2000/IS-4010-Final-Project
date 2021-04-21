@@ -273,7 +273,7 @@ public class Game implements ActionListener {
         }
 
         if (holder == thequestions.size()){
-            welcome.setText("Wow " + name.getText() + ", you've answered all the questions I have for you. Your final score is: " + playersScore);
+            welcome.setText("<html>Wow " + name.getText() + ", you've answered all the questions I have for you.<br>Your final score is: " + playersScore + "</html>");
 
             currentQuestion.setVisible(false);
             questionValue.setVisible(false);
